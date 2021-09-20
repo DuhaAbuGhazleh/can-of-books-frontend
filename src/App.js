@@ -1,39 +1,54 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-//import OwnerBooks from './components/OwnerBooks';
- class App extends Component {
-constructor(props){
-  super(props);
-  this.state={
-    databook:[]
-  }
-}
+import BestBook from './components/BestBook';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Profile from './components/Profile';
+import Home from './components/Home';
 
-// componentDidMount=async()=>{
-//   let data1= await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/Book`).then(response=>{
-//     this.setState({
-//       databook:data1.data
-//     })
-//   })
-// }
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+
+} from "react-router-dom";
+
+ class App extends Component {
 
   render() {
     return (
-     <>
-        <h1>Can of Books</h1>
-    {/* {
-      this.state.data.map(item=>{
-        return<OwnerBooks
-        title={item.title}
-        description={item.description}
-        status={item.status}
-        />
-      })
-    } */}
-      </>
+      <> 
     
+      <Router>
+       
+         
+      <Header />
+        <Switch>
+          <Route exact path="/">
+            <BestBook/>
+          </Route>
+          <Route path="/first">
+            <Home/>
+          </Route>
+          <Route path="/second">
+            <Profile />
+          </Route>
+        </Switch>
+              
+      </Router> 
+      <Footer />
+    </>
+
     )
   }
 }
 
-export default App
+export default App 
+
+
+          
+    
+          
+      
+     
