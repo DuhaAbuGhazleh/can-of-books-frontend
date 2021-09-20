@@ -1,71 +1,77 @@
-# Getting Started with Create React App
+# Project Name
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Author**:Duha 
 
-## Available Scripts
+**Version**: 2.0.0 
 
-In the project directory, you can run:
+## Overview
 
-### `npm start`
+Build out this code base to create an web app to track what books have impacted you, and what's recommended to read next.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## Architecture
+database
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ delete 
+ 
+  post 
+  
+   update
 
-### `npm run build`
+   React Bootstrap
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Change Log
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Book Component: As a user, I'd like to see my list of books, so that I can track what's impacted me, and what's recommended to me.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Estimate of time needed to complete: 3hr
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Start time:2pm
 
-## Learn More
+Finish time: 6pm
+Actual time needed to complete: 4hr
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Storage: As a user, I'd like my books to persist, so that whenever I make changes, I can see the my full list of best books.
 
-### Code Splitting
+Estimate of time needed to complete: 2hr
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Start time: 7pm
 
-### Analyzing the Bundle Size
+Finish time: 12pm
+Actual time needed to complete: 5hr
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. Create: As a user, I'd like to add a new book to my shelf, so that I can keep my lists up to date with my latest books and recommendations.
 
-### Advanced Configuration
+Estimate of time needed to complete: 3hr
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Start time: 2pm
 
-### Deployment
+Finish time: 6pm
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Actual time needed to complete: 4hr
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# can-of-books-frontend
+
+4.  Delete: As a user, I want to remove books from my list, so that only the most important books are on my shelf.
+
+Estimate of time needed to complete: 2hr
+
+Start time: 8pm
+
+Finish time: 12am
+
+Actual time needed to complete: 4hr
+
+
+## Credit and Collaborations
+
+
