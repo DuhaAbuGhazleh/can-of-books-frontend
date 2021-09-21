@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-//import Book from './Book';
+import BookForm from './BookForm';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+
 
 export class BestBook extends Component {
   constructor(props){
@@ -13,13 +15,15 @@ export class BestBook extends Component {
       title:"",
       description: '',
       status: '',
+      email:'',
+      id:'',
       modal:false,
-      showbook:false
+     showbook:false
     }
   }
   
   componentDidMount=()=>{
-  axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/book`)
+  axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/book-get`)
 
   .then(response=>{
       this.setState({
@@ -33,6 +37,7 @@ export class BestBook extends Component {
 newTitle = (e) => this.setState({ title: e.target.value });
 newDescription = (e) => this.setState({ description: e.target.value });
 newStatus = (e) => this.setState({status : e.target.value });
+newEmail = (e) => this.setState({email : e.target.value });
 
 
 
@@ -48,17 +53,24 @@ closeCreateModal = () =>
 this.setState({
   modal: false 
 });
+
+updateClosebook=()=>{
+  this.setState({
+ showbook:false,
+  })
+}
 //////////////////////////////////////////
 addBook = async(e)=>{
   e.preventDefault();
 
-  const BookFormModal ={
+  const addBookFormModal ={
     title: this.state.title,
     status:this.state.status,
     description:this.state.description,
+    email:this.state.email,
   }
 
-  const newBookFromModal = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/create-book`, BookFormModal)
+  const newBookFromModal = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/create-book`, addBookFormModal)
   this.setState({
       book: newBookFromModal.data,
       modal:false
@@ -69,11 +81,11 @@ addBook = async(e)=>{
 
   
   handleDelete=(id)=>{
-    let bookId=id;
+    
     let config={
         method:"DELETE",
-        baseURL:`${process.env.REACT_APP_BACKEND_SERVER}`,
-        url:`/delete-book/${bookId}`,
+        baseURL:process.env.REACT_APP_BACKEND_SERVER,
+        url:`/delete-book/${id}`,
 
     }
 
@@ -83,7 +95,39 @@ addBook = async(e)=>{
       })
     })
 }
+////////////////////////////////////////////////////
 
+handleUpdate=(id,title,description,status,email)=>{
+  this.setState({
+    id:id,
+    title:title,
+    description:description,
+    status:status,
+    email:email,
+    showbook:true,
+
+  })
+}
+
+//////////////////   PUT  //////////////////////////
+updateForm = async (e) =>{
+  e.preventDefault();
+  const bookInformation = {
+      title: this.state.title,
+     // image_url: this.state.image_url,
+      email: this.props.email,
+      status: this.state.status,
+      description: this.state.description,
+  }
+  let updatebooksInfo = await axios.put(`${this.state.server}/update-book/${this.state.id}`, bookInformation)
+  this.setState({
+      book :updatebooksInfo.data,
+      showbook:false
+  })
+}
+
+
+///////////////////////////////////////
 render() {
     return (
 
@@ -93,6 +137,26 @@ render() {
        Add Book
       </Button>
 
+      <BookForm
+      title={this.state.title} 
+      description={this.state.description}
+      status={this.state.status}
+      email={this.state.email}
+
+
+      newTitle={this.newTitle}
+      newDescription={this.newDescription}
+      newStatus={this.newStatus}
+      newEmail={this.newEmail}
+
+      updateForm={this.updateForm}
+     showbook={this.state.showbook}
+     closeCreateModal={this.closeCreateModal}
+      handleUpdate={this.handleUpdate}
+
+     
+      />
+
       <Modal show={this.state.modal} onHide={this.closeCreateModal}>
         <Modal.Header closeButton>
           <Modal.Title>Modal Book</Modal.Title>
@@ -100,31 +164,30 @@ render() {
         <Modal.Body> 
 
 
-        {/* <FormGroup controlId="code">
-   <FormControl onChange={handleChange} bsSize="large" rows="20" componentClass="textarea" placeholder="Code here..." />
-  </FormGroup> */}
 
+                    <Form onSubmit={(e) => this.addBook(e)}>
+                                    <Form.Group controlId="formBasicEmail">
+                                        <Form.Label>Title</Form.Label>
+                                        <Form.Control type="text" placeholder="title" onChange={(e) => this.newTitle(e)} />
 
+                                    </Form.Group>
+                                    <Form.Group controlId="formBasicEmail">
+                                        <Form.Label>description</Form.Label>
+                                        <Form.Control type="text" placeholder="description" onChange={(e) => this.newDescription(e)} />
 
-<form onSubmit={(e)=>this.addBook(e)}>
-<fieldset disabled>
- <div class="form-group">
-   <label for="title">Title of Book</label>
-     <input type="text" id="title" class="form-control" placeholder="Type title"/>
-   </div>
-   <div class="form-group">
-     <label for="description">The description </label>
-     <input type="text" id="description" class="form-control" placeholder="Type description"/>
-       </div>
+                                    </Form.Group>
+                                    <Form.Group controlId="formBasicEmail">
+                                        <Form.Label>status</Form.Label>
+                                        <Form.Label>description</Form.Label>
+                                        <Form.Control type="text" placeholder="description" onChange={(e) => this.newStatus(e)} />
 
-       <div class="form-group">
-     <label for="status">The status </label>
-     <input type="text" id="status" class="form-control" placeholder="Type status"/>
-       </div>
-   </fieldset>
- </form>
-      
+                                    </Form.Group>
 
+                                  
+                                    <Button variant="primary" onClick={this.addBook}>
+                                        Add book
+                                    </Button>
+                                </Form>
 
 
         </Modal.Body>
@@ -139,21 +202,8 @@ render() {
       </Modal>
 
 
-      ///////////////add delete///////////
 
-      {
-        this.state.showbook&&this.state.databook.map((item,e)=>{
-          return(
-        <h1>title={item.title}</h1>,     
-          <p>description={item.description}</p>,
-           <h2> status={item.status}</h2>,
-
-           <Button variant="primary" onClick={() => this.handleDelete(e)}>
-           Delete book
-       </Button>
-          )
-        })
-      }
+     
     </>
 
 
