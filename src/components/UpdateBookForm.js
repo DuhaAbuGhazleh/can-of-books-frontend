@@ -23,7 +23,7 @@ import Form from 'react-bootstrap/Form';
 
 
 
-                        <Form onSubmit={(e) => this.props.UpdateForm(e)}>
+                        <Form onSubmit={(e) => this.props.UpdateForm(e,this.props.bookid)}>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Title</Form.Label>
                                 <Form.Control type="text" placeholder="title" onChange={(e) => this.props.updatetitle(e)} />
