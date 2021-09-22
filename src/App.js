@@ -7,11 +7,13 @@ import React, { Component } from 'react'
 // import Login from './components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import UpdateBookForm from './components/UpdateBookForm';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
+
+import { Container } from 'react-bootstrap';
+import BookFormModal from './components/BookFormModal';
 import MyBestBook from './components/MyBestBook';
+
+
 const REACT_APP_BACKEND_SERVER = process.env.REACT_APP_BACKEND_SERVER;
 
 // import {
@@ -27,23 +29,29 @@ const REACT_APP_BACKEND_SERVER = process.env.REACT_APP_BACKEND_SERVER;
     super(props);
     this.state={
       databook:[],
+
       title:"",
       description: '',
       status: '',
       email:'',
-      id:'',
-      modal:false,
-     showbook:false
+
+      lastTitle: '',
+      lastDescription: '',
+      lastStatus: '',
+      lastEmail:'',
+
+      bookid:'',
+     showBookModal:false
     }
   }
   
-  componentDidMount=()=>{
+  componentDidMount= ()=>{
   axios.get(`${REACT_APP_BACKEND_SERVER}/book-get`)
 
   .then(response=>{
       this.setState({
         databook:response.data,
-        //showbook:true
+       
       })
     }).then(data=>console.log(data))
   }
@@ -54,27 +62,30 @@ newDescription = (e) => this.setState({ description: e.target.value });
 newStatus = (e) => this.setState({status : e.target.value });
 newEmail = (e) => this.setState({email : e.target.value });
 
-
+updatetitle = (e) => this.setState({ lastTitle: e.target.value });
+updateDescription = (e) => this.setState({ lastDescription: e.target.value });
+updateStatus = (e) => this.setState({ lastStatus: e.target.value });
+updateEmail = (e) => this.setState({ lastEmail: e.target.value });
 
 ///////////////////////////////////////////
 openCreateModal = () => 
 this.setState({ 
-  modal: true 
+ showBookModal: true 
 
 });
 
 
 closeCreateModal = () => 
 this.setState({
-  modal: false 
+  showBookModal: false 
 });
 
-updateClosebook=()=>{
-  this.setState({
- showbook:false,
-  })
-}
-//////////////////////////////////////////
+// updateClosebook=()=>{
+//   this.setState({
+//  showBookModal:false,
+//   })
+// }
+////////////////// ADD BOOK ////////////////////////
 handelSubmit = (e)=>{
   e.preventDefault();
 
@@ -82,6 +93,7 @@ handelSubmit = (e)=>{
     method:"POST",
     baseURL:`${REACT_APP_BACKEND_SERVER}`,
     url:`/create-book`,
+    
     data:{
       title:this.state.title,
       email:this.state.email,
@@ -99,17 +111,17 @@ handelSubmit = (e)=>{
 
 ////////////////////////////////////////////////////
 
-handleUpdate=(id,title,description,status,email)=>{
-  this.setState({
-    id:id,
-    title:title,
-    description:description,
-    status:status,
-    email:email,
-    showbook:true,
+// handleUpdate=(bookid,title,description,status,email)=>{
+//   this.setState({
+//     bookid:bookid,
+//     title:title,
+//     description:description,
+//     status:status,
+//     email:email,
+//     showBookModal:true,
 
-  })
-}
+//   })
+// }
 //////////////////   PUT  //////////////////////////
 // updateForm = async (e) =>{
 //   e.preventDefault();
@@ -131,12 +143,12 @@ UpdateForm=()=>{
 let config={
   method:"PUT",
   baseURL:`${REACT_APP_BACKEND_SERVER}`,
-  url:`/update-book/${this.state.id}`,
+  url:`/update-book/${this.state.bookid}`,
   data:{
-    title: this.state.title,
-             email: this.props.email,
-          status: this.state.status,
-          description: this.state.description,
+    title: this.state.lastTitle,
+            email: this.props.lastEmail,
+        status: this.state.lastStatus,
+         description: this.state.lastDescription,
   }
 }
 axios(config).then(res=>{
@@ -149,12 +161,12 @@ axios(config).then(res=>{
 //////////////////////////////////////////
 
   
-  handleDelete=(id)=>{
+  handleDelete=(bookid)=>{
     
     let config={
         method:"DELETE",
         baseURL:`${REACT_APP_BACKEND_SERVER}`,
-        url:`/delete-book/${id}`,
+        url:`/delete-book/${bookid}`,
 
     }
 
@@ -169,117 +181,62 @@ axios(config).then(res=>{
 
   render() {
     return (
-      <>
-
-{
-this.state.databook.map(item => {
-          return <MyBestBook
-            id={item._id}
-            title={item.title}
-            description={item.description}
-            status={item.status}
-            email={item.email}
-            handleDelete={this.handleDelete}
-            handleUpdate={this.handleUpdate}
-          />
-        })
-        }
-
-        <Button variant="primary" onClick={this.openCreateModal}>
-          Add Book
-        </Button>
-
-        <UpdateBookForm
-          title={this.state.title}
-          description={this.state.description}
-          status={this.state.status}
-          email={this.state.email}
+      <><>
 
 
+
+
+
+        <Container>
+          <Button variant="primary" onClick={this.openCreateModal}>
+            Add Book
+          </Button>
+
+  </Container>
+
+          {this.state.databook &&
+            <MyBestBook
+              databook={this.state.databook}
+              handleDelete={this.handleDelete}
+              updatetitle={this.updatetitle}
+              updateDescription={this.updateDescription}
+              updateStatus={this.updateStatus}
+              UpdateForm={this.UpdateForm} />}
+      
+
+        <BookFormModal
+          closeCreateModal={this.closeCreateModal}
+          showBookModal={this.state.showBookModal}
           newTitle={this.newTitle}
           newDescription={this.newDescription}
           newStatus={this.newStatus}
           newEmail={this.newEmail}
+          handelSubmit={this.handelSubmit} />
 
-          updateForm={this.updateForm}
-         
-          closeCreateModal={this.closeCreateModal}
-       />
-
-        <Modal show={this.state.modal} onHide={this.closeCreateModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal Book</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-
-
-
-            <Form onSubmit={(e) => this.addBook(e)}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Title</Form.Label>
-                <Form.Control type="text" placeholder="title" onChange={(e) => this.newTitle(e)} />
-
-              </Form.Group>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>description</Form.Label>
-                <Form.Control type="text" placeholder="description" onChange={(e) => this.newDescription(e)} />
-
-              </Form.Group>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>status</Form.Label>
-                <Form.Label>description</Form.Label>
-                <Form.Control type="text" placeholder="description" onChange={(e) => this.newStatus(e)} />
-
-              </Form.Group>
-
-
-              <Button variant="primary" onClick={this.addBook}>
-                Add book
-              </Button>
-            </Form>
-
-
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.closeCreateModal}>
-              Close
-            </Button>
-            <Button variant="primary" type='submit'>
-              Submit
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-
-
-
-   
-      
-      
-      <>
+      </><>
 
           {/* <Router>
-     
-       
-    <BestBook />
-      <Switch>
-        <Route exact path="/">
-          <Header/>
-        </Route>
-        <Route path="/first">
-          <Login/>
-        </Route>
-        <Route path="/second">
-          <Profile />
-        </Route>
-      </Switch>
-            
-    </Router>
-    <Footer /> */}
-        </>
+
+ 
+<BestBook />
+<Switch>
+  <Route exact path="/">
+    <Header/>
+  </Route>
+  <Route path="/first">
+    <Login/>
+  </Route>
+  <Route path="/second">
+    <Profile />
+  </Route>
+</Switch>
+      
+</Router>
+<Footer /> */}
+        </></>
         
         
-        </>
+    
 
     )
   }

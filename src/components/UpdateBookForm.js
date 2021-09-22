@@ -8,31 +8,36 @@ import Form from 'react-bootstrap/Form';
 
  class UpdateBookForm extends Component {
     render() {
+
+       
+
+        
+        
         return (
             <div>
-                <Modal show={this.props.showbook} onHide={this.props.closeCreateModal}>
+                <Modal show={this.props.showUpdateModal} onHide={this.props.closeUpdateModal}>
                     <Modal.Header closeButton>
-                        <Modal.Title> Modal Book</Modal.Title>
+                        <Modal.Title>Update Modal Book</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
 
 
 
-                        <Form onSubmit={(e) => this.props.updateForm(e)}>
+                        <Form onSubmit={(e) => this.props.UpdateForm(e)}>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Title</Form.Label>
-                                <Form.Control type="text" placeholder="title" onChange={(e) => this.newTitle(e)} />
+                                <Form.Control type="text" placeholder="title" onChange={(e) => this.props.updatetitle(e)} />
 
                             </Form.Group>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Description</Form.Label>
-                                <Form.Control type="text" placeholder="description" onChange={(e) => this.newDescription(e)} />
+                                <Form.Control type="text" placeholder="description" onChange={(e) => this.props.updateDescription(e)} />
 
                             </Form.Group>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Status</Form.Label>
                                 <Form.Label>Description</Form.Label>
-                                <Form.Control type="text" placeholder="Description" onChange={(e) => this.newStatus(e)} />
+                                <Form.Control type="text" placeholder="Description" onChange={(e) => this.props.updateStatus(e)} />
 
                             </Form.Group>
 

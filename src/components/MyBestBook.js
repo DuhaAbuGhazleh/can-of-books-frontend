@@ -1,22 +1,82 @@
 import React, { Component } from 'react'
-import {Button, Card}from 'react-bootstrap';
- class MyBestBook extends Component {
-    render() {
-        return (
-            <Card>
-            <Card.Header>{this.props.title}</Card.Header>
-            <Card.Body>
-              <Card.Title>{this.props.email}</Card.Title>
-              <Card.Text>{this.props.description} </Card.Text>
-              <Button variant="primary" onClick={()=>{this.props.handleDelete(this.props.id)}}>DELETE</Button>
-              <Button variant="primary" onClick={()=>{this.props.handleUpdate(this.props.id,this.props.title,this.props.description,this.props.email,this.props.status)}}>DELETE</Button>
+import { Button, Carousel } from 'react-bootstrap';
+import UpdateBookForm from './UpdateBookForm';
 
-            </Card.Body>
-          </Card>
-        )
+class MyBestBook extends Component {
+    constructor() {
+        super();
+        this.state = {
+            showUpdateModal: false,
+        }
+    }
+    closeUpdateModal = () => this.setState({ showUpdateModal: false });
+    render() {
+        const {
+            databook,
+            handleDelete,
+            updatetitle,
+            updateDescription,
+            updateStatus,
+            UpdateForm,
+        } = this.props
+
+
+        return (
+            <>
+                <Carousel>
+                    {                            
+
+                        databook.map ((e, index) => {
+                            console.log(e);
+                            return (
+
+                                <Carousel.Item key={index} >
+                                    <img
+                                        className="d-block w-100"
+                                        src="https://media.istockphoto.com/photos/bookshelves-in-the-library-with-old-books-3d-render-picture-id1180993120?k=20&m=1180993120&s=612x612&w=0&h=gpqL2FMcHxizB727xz4Iy6larvpJi2LQaIOd0Hsz-jw="
+                                        alt="First slide"
+                                    />
+                                    <Carousel.Caption>
+                                        <h3>{e.title}</h3>
+                                        <p>{e.description}</p>
+                                        <small>{e.status}</small><br />
+                                        <Button
+                                            className='m-3'
+                                            variant='outline-light '
+                                            onClick={() => { handleDelete(e._id) }}
+                                        >
+                                            Delete
+                                        </Button>
+                                        <Button
+                                            className='m-3'
+                                            variant='outline-light '
+                                            onClick={() => (this.setState({ showUpdateModal: true }))}
+                                        >
+                                            Update
+                                        </Button>
+                                    </Carousel.Caption>
+                                    <UpdateBookForm
+                                        showUpdateModal2={this.state.showUpdateModal}
+                                        closeUpdateModal2={this.closeUpdateModal}
+                                        UpdateForm2={UpdateForm}
+                                        updatetitle2={updatetitle}
+                                        updateDescription2={updateDescription}
+                                        updateStatus2={updateStatus}
+                                        bookid={e._id}
+                                    />
+                                </Carousel.Item>
+                            )
+                        })
+                    }
+
+                </Carousel>
+
+            </>
+        );
     }
 }
 
 export default MyBestBook
+
 
 
