@@ -71,6 +71,26 @@ Finish time: 12am
 
 Actual time needed to complete: 4hr
 
+5. Update: As a user, I want to update book details on my list, so that I can change the book status, or update the book details as I learn more about it.
+
+Estimate of time needed to complete: 2hr
+
+Start time: 3pm
+
+Finish time: 7am
+
+Actual time needed to complete: 4hr
+
+6. Authentication: As a user, I'd like to sign in with OAuth, so that I can authenticate to the site without creating yet-another username/password combo to potentially get hacked or lost.
+
+
+Estimate of time needed to complete: 2hr
+
+Start time: 3pm
+
+Finish time: 7am
+
+Actual time needed to complete: 4hr
 
 ## Credit and Collaborations
 
