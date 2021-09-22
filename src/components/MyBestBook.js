@@ -56,12 +56,12 @@ class MyBestBook extends Component {
                                         </Button>
                                     </Carousel.Caption>
                                     <UpdateBookForm
-                                        showUpdateModal2={this.state.showUpdateModal}
-                                        closeUpdateModal2={this.closeUpdateModal}
-                                        UpdateForm2={UpdateForm}
-                                        updatetitle2={updatetitle}
-                                        updateDescription2={updateDescription}
-                                        updateStatus2={updateStatus}
+                                        showUpdateModal={this.state.showUpdateModal}
+                                        closeUpdateModal={this.closeUpdateModal}
+                                        UpdateForm={UpdateForm}
+                                        updatetitle={updatetitle}
+                                        updateDescription={updateDescription}
+                                        updateStatus={updateStatus}
                                         bookid={e._id}
                                     />
                                 </Carousel.Item>
